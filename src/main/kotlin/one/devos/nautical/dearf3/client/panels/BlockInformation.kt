@@ -9,6 +9,7 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.HitResult
+import one.devos.nautical.dearf3.client.DearF3Client
 import one.devos.nautical.dearf3.client.panels.Constants.client
 import one.devos.nautical.dearf3.client.panels.Constants.clientCamera
 
@@ -42,41 +43,50 @@ object BlockInformation : ImGuiPanel {
         setWindowSize(500F, 500F, ImGuiCond.FirstUseEver)
         setWindowPos(50F, 145F, ImGuiCond.FirstUseEver)
 
-        if (blockRaycastHit.type == HitResult.Type.BLOCK) {
-            val blockHit = blockRaycastHit as BlockHitResult
-            val blockPos = blockHit.blockPos
-            val blockState = client.level!!.getBlockState(blockPos)
 
-            blockHitResultName = blockState!!.block.name.string
-            blockStateHitResultName = blockState.block.stateDefinition.toString()
+        try {
+            if (blockRaycastHit.type == HitResult.Type.BLOCK) {
+                val blockHit = blockRaycastHit as BlockHitResult
+                val blockPos = blockHit.blockPos
+                val blockState = client.level!!.getBlockState(blockPos)
 
-            blockPosHitResultX = blockPos.x
-            blockPosHitResultY = blockPos.y
-            blockPosHitResultZ = blockPos.z
-            if (blockState.hasProperty(BlockStateProperties.WATERLOGGED)) {
-                blockPosHitResultWaterlogState = blockState.getValue(BlockStateProperties.WATERLOGGED)
+                blockHitResultName = blockState!!.block.name.string
+                blockStateHitResultName = blockState.block.stateDefinition.toString()
+
+                blockPosHitResultX = blockPos.x
+                blockPosHitResultY = blockPos.y
+                blockPosHitResultZ = blockPos.z
+                if (blockState.hasProperty(BlockStateProperties.WATERLOGGED)) {
+                    blockPosHitResultWaterlogState = blockState.getValue(BlockStateProperties.WATERLOGGED)
+                }
+
+                blockState.tags.map { tagKey -> "#" + tagKey.location() }.forEach { e -> blockStateTagsHitResultList.add(e) }
             }
-
-            blockState.tags.map { tagKey -> "#" + tagKey.location() }.forEach { e -> blockStateTagsHitResultList.add(e) }
+        } catch (e: Exception) {
+            DearF3Client.LOGGER.error(e.stackTraceToString())
         }
 
-        if (fluidRaycastHit.type == HitResult.Type.BLOCK) {
-            val blockHit = fluidRaycastHit as BlockHitResult
-            val blockPos = blockHit.blockPos
-            val fluidState = client.level!!.getFluidState(blockPos)
+        try {
+            if (fluidRaycastHit.type == HitResult.Type.BLOCK) {
+                val blockHit = fluidRaycastHit as BlockHitResult
+                val blockPos = blockHit.blockPos
+                val fluidState = client.level!!.getFluidState(blockPos)
 
-            fluidHitResultName = fluidState!!.type.toString()
-            fluidBlockPosHitResultFluidState = BuiltInRegistries.FLUID.getKey(fluidState.type).toString()
+                fluidHitResultName = fluidState!!.type.toString()
+                fluidBlockPosHitResultFluidState = BuiltInRegistries.FLUID.getKey(fluidState.type).toString()
 
-            if (fluidBlockPosHitResultFluidState.contains("EmptyFluid")) {
-                fluidBlockPosHitResultFluidState = "Not a fluid!"
+                if (fluidBlockPosHitResultFluidState.contains("EmptyFluid")) {
+                    fluidBlockPosHitResultFluidState = "Not a fluid!"
+                }
+
+                fluidBlockPosHitResultX = blockPos.x
+                fluidBlockPosHitResultY = blockPos.y
+                fluidBlockPosHitResultZ = blockPos.z
+
+                fluidState.tags.map { tagKey -> "#" + tagKey.location }.forEach { e -> fluidBlockStateTagsHitResultList.add(e) }
             }
-
-            fluidBlockPosHitResultX = blockPos.x
-            fluidBlockPosHitResultY = blockPos.y
-            fluidBlockPosHitResultZ = blockPos.z
-
-            fluidState.tags.map { tagKey -> "#" + tagKey.location }.forEach { e -> fluidBlockStateTagsHitResultList.add(e) }
+        } catch (e: Exception) {
+            DearF3Client.LOGGER.error(e.stackTraceToString())
         }
 
         pushItemWidth(200F)

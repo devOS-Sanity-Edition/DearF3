@@ -6,6 +6,7 @@ import gay.asoji.innerpastels.client.ImGuiClient.panels
 import gay.asoji.innerpastels.client.imgui.ImGuiPanel
 import gay.asoji.innerpastels.misc.DevDisclaimer
 import imgui.ImGui
+import imgui.ImGui.end
 import imgui.type.ImBoolean
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
