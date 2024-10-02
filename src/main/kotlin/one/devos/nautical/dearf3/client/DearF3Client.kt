@@ -49,15 +49,15 @@ object DearF3Client : ClientModInitializer {
     fun imGuiInitialization() {
         panels.addAll(
             listOf(
-                object : ImGuiPanel { // anything that doesnt extend `ImGuiPanel`, do this
-                    override fun render(open_: ImBoolean) {
-                        ImGui.showDemoWindow() // no more demo window for now
-                    }
-
-                    override fun theme() {
-
-                    }
-                },
+//                object : ImGuiPanel { // anything that doesnt extend `ImGuiPanel`, do this
+//                    override fun render(open_: ImBoolean) {
+//                        ImGui.showDemoWindow() // no more demo window for now
+//                    }
+//
+//                    override fun theme() {
+//
+//                    }
+//                },
 //                    DevDebugSpace
                 BlockInformation,
                 ClientInfo,

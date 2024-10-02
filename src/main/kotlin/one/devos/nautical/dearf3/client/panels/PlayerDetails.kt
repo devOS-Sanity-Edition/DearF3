@@ -30,8 +30,8 @@ object PlayerDetails : ImGuiPanel {
         setWindowPos(50F, 655F, ImGuiCond.FirstUseEver)
 
         pushItemWidth(200F)
-        inputFloat3("Co-ordinates", floatArrayOf(clientCamera.x.toFloat(), clientCamera.y.toFloat(), clientCamera.z.toFloat()))
-        inputFloat2("Facing X/Y", floatArrayOf(Mth.wrapDegrees(clientCamera.rotationVector.x), Mth.wrapDegrees(clientCamera.rotationVector.y)))
+        inputFloat3("Co-ordinates", floatArrayOf(clientCamera?.x?.toFloat() ?: return, clientCamera?.y?.toFloat() ?: return, clientCamera?.z?.toFloat() ?: return))
+        inputFloat2("Facing X/Y", floatArrayOf(Mth.wrapDegrees(clientCamera?.rotationVector?.x?.toFloat() ?: return), Mth.wrapDegrees(clientCamera?.rotationVector?.y?.toFloat() ?: return)))
 
         end()
     }

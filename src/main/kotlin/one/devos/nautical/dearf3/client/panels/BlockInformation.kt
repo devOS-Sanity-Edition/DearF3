@@ -19,8 +19,8 @@ object BlockInformation : ImGuiPanel {
     }
 
     override fun render(open_: ImBoolean) {
-        val blockRaycastHit = clientCamera.pick(50.0, 0.0f, false)
-        val fluidRaycastHit = clientCamera.pick(50.0, 0.0f, true)
+        val blockRaycastHit = clientCamera?.pick(50.0, 0.0f, false)
+        val fluidRaycastHit = clientCamera?.pick(50.0, 0.0f, true)
         var blockHitResultName = ""
         var blockStateHitResultName = ""
         var blockPosHitResultWaterlogState = false
@@ -45,12 +45,12 @@ object BlockInformation : ImGuiPanel {
 
 
         try {
-            if (blockRaycastHit.type == HitResult.Type.BLOCK) {
+            if (blockRaycastHit?.type == HitResult.Type.BLOCK) {
                 val blockHit = blockRaycastHit as BlockHitResult
                 val blockPos = blockHit.blockPos
-                val blockState = client.level!!.getBlockState(blockPos)
+                val blockState = client.level!!.getBlockState(blockPos) ?: return
 
-                blockHitResultName = blockState!!.block.name.string
+                blockHitResultName = blockState.block.name.string
                 blockStateHitResultName = blockState.block.stateDefinition.toString()
 
                 blockPosHitResultX = blockPos.x
@@ -63,16 +63,16 @@ object BlockInformation : ImGuiPanel {
                 blockState.tags.map { tagKey -> "#" + tagKey.location() }.forEach { e -> blockStateTagsHitResultList.add(e) }
             }
         } catch (e: Exception) {
-            DearF3Client.LOGGER.error(e.stackTraceToString())
+//            DearF3Client.LOGGER.error(e.stackTraceToString())
         }
 
         try {
-            if (fluidRaycastHit.type == HitResult.Type.BLOCK) {
+            if (fluidRaycastHit?.type == HitResult.Type.BLOCK) {
                 val blockHit = fluidRaycastHit as BlockHitResult
                 val blockPos = blockHit.blockPos
-                val fluidState = client.level!!.getFluidState(blockPos)
+                val fluidState = client.level!!.getFluidState(blockPos) ?: return
 
-                fluidHitResultName = fluidState!!.type.toString()
+                fluidHitResultName = fluidState.type.toString()
                 fluidBlockPosHitResultFluidState = BuiltInRegistries.FLUID.getKey(fluidState.type).toString()
 
                 if (fluidBlockPosHitResultFluidState.contains("EmptyFluid")) {
@@ -86,12 +86,12 @@ object BlockInformation : ImGuiPanel {
                 fluidState.tags.map { tagKey -> "#" + tagKey.location }.forEach { e -> fluidBlockStateTagsHitResultList.add(e) }
             }
         } catch (e: Exception) {
-            DearF3Client.LOGGER.error(e.stackTraceToString())
+//            DearF3Client.LOGGER.error(e.stackTraceToString())
         }
 
         pushItemWidth(200F)
-        inputFloat3("Block Position: Global", floatArrayOf(clientCamera.blockPosition().x.toFloat(), clientCamera.blockPosition().y.toFloat(), clientCamera.blockPosition().z.toFloat()))
-        inputFloat3("Block Position: Relative", floatArrayOf((clientCamera.blockPosition().x.toFloat()), (clientCamera.blockPosition().y.toFloat()), (clientCamera.blockPosition().z.toFloat())))
+        inputFloat3("Block Position: Global", floatArrayOf(clientCamera?.blockPosition()?.x?.toFloat() ?: return, clientCamera?.blockPosition()?.y?.toFloat() ?: return, clientCamera?.blockPosition()?.z?.toFloat() ?: return))
+        inputFloat3("Block Position: Relative", floatArrayOf((clientCamera?.blockPosition()?.x?.toFloat() ?: return), (clientCamera?.blockPosition()?.y?.toFloat() ?: return), (clientCamera?.blockPosition()?.z?.toFloat() ?: return)))
         spacing()
         separator()
         spacing()
