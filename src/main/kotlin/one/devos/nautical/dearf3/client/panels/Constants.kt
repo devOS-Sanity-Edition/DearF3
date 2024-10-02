@@ -6,6 +6,6 @@ import net.minecraft.client.Minecraft
 
 object Constants {
     val client = Minecraft.getInstance()
-    val clientCamera = client.getCameraEntity()!!
+    val clientCamera get() = client.getCameraEntity()
     var io: ImGuiIO = ImGui.getIO()
 }
