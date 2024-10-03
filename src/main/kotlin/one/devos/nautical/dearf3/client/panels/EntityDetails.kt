@@ -13,6 +13,10 @@ import one.devos.nautical.dearf3.client.panels.Constants.client
 
 object EntityDetails : ImGuiPanel {
     override fun theme() {
+        if (!DearF3Client.isImGuiRenderEnabled) {
+            return
+        }
+
         val theme = ImGui.getStyle()
 
         theme.setColor(ImGuiCol.TitleBg, ImColor.rgb("#4f2d02"))
@@ -20,6 +24,10 @@ object EntityDetails : ImGuiPanel {
     }
 
     override fun render(open_: ImBoolean) {
+        if (!DearF3Client.isImGuiRenderEnabled) {
+            return
+        }
+
         var entityPosHitResultType = ""
         var entityPosHitResultX = 0.0
         var entityPosHitResultY = 0.0

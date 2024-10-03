@@ -18,6 +18,10 @@ import one.devos.nautical.dearf3.client.panels.Constants.io
 
 object GameInformation : ImGuiPanel {
     override fun theme() {
+        if (!DearF3Client.isImGuiRenderEnabled) {
+            return
+        }
+
         val theme = ImGui.getStyle()
 
         theme.setColor(ImGuiCol.TitleBg, ImColor.rgb("#562105"))
@@ -25,6 +29,9 @@ object GameInformation : ImGuiPanel {
     }
 
     override fun render(open_: ImBoolean) {
+        if (!DearF3Client.isImGuiRenderEnabled) {
+            return
+        }
 
         DearF3Client.LOGGER.info("Game Information loaded")
         if (!ImGui.begin("Game Information")) {

@@ -12,6 +12,10 @@ import one.devos.nautical.dearf3.client.DearF3Client
 
 object ClientInfo : ImGuiPanel {
     override fun theme() {
+        if (!DearF3Client.isImGuiRenderEnabled) {
+            return
+        }
+
         val theme = getStyle()
 
         theme.setColor(ImGuiCol.TitleBgActive, ImColor.rgb("#f94144"))
@@ -19,6 +23,10 @@ object ClientInfo : ImGuiPanel {
     }
 
     override fun render(open_: ImBoolean) {
+        if (!DearF3Client.isImGuiRenderEnabled) {
+            return
+        }
+
         DearF3Client.LOGGER.info("Client Information loaded")
         if (!ImGui.begin("Client Information")) {
             end()

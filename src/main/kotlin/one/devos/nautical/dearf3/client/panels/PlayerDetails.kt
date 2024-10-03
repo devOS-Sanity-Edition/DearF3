@@ -13,6 +13,10 @@ import one.devos.nautical.dearf3.client.panels.Constants.clientCamera
 
 object PlayerDetails : ImGuiPanel {
     override fun theme() {
+        if (!DearF3Client.isImGuiRenderEnabled) {
+            return
+        }
+
         val theme = ImGui.getStyle()
 
         theme.setColor(ImGuiCol.TitleBg, ImColor.rgb("#562105"))
@@ -22,6 +26,10 @@ object PlayerDetails : ImGuiPanel {
     }
 
     override fun render(open_: ImBoolean) {
+        if (!DearF3Client.isImGuiRenderEnabled) {
+            return
+        }
+
         DearF3Client.LOGGER.info("Player Details loaded")
         if (!ImGui.begin("Player Position", open_)) {
             end()

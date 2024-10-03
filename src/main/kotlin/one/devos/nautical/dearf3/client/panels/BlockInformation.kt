@@ -15,10 +15,16 @@ import one.devos.nautical.dearf3.client.panels.Constants.clientCamera
 
 object BlockInformation : ImGuiPanel {
     override fun theme() {
-
+        if (!DearF3Client.isImGuiRenderEnabled) {
+            return
+        }
     }
 
     override fun render(open_: ImBoolean) {
+        if (!DearF3Client.isImGuiRenderEnabled) {
+            return
+        }
+
         val blockRaycastHit = clientCamera?.pick(50.0, 0.0f, false)
         val fluidRaycastHit = clientCamera?.pick(50.0, 0.0f, true)
         var blockHitResultName = ""

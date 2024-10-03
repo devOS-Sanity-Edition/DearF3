@@ -24,7 +24,9 @@ object DearF3Client : ClientModInitializer {
     val MOD_NAME: String = FMW.getName(MOD_ID)
     val LOGGER: Logger = LoggerFactory.getLogger(MOD_ID)
 
-    private var isImGuiRenderEnabled: Boolean = false
+    var isImGuiRenderEnabled: Boolean = false
+        private set
+
     val DEARF3_MAPPING = KeyMapping(
         "key.dearf3.mapping",
         InputConstants.Type.KEYSYM,
@@ -59,11 +61,12 @@ object DearF3Client : ClientModInitializer {
 //                    }
 //                },
 //                    DevDebugSpace
-                BlockInformation,
+
+//                BlockInformation,
                 ClientInfo,
                 EntityDetails,
                 GameInformation,
-                PlayerDetails
+//                PlayerDetails
             )
         )
 
