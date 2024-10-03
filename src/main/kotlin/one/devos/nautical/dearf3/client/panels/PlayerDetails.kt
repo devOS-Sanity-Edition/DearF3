@@ -8,6 +8,7 @@ import imgui.flag.ImGuiCol
 import imgui.flag.ImGuiCond
 import imgui.type.ImBoolean
 import net.minecraft.util.Mth
+import one.devos.nautical.dearf3.client.DearF3Client
 import one.devos.nautical.dearf3.client.panels.Constants.clientCamera
 
 object PlayerDetails : ImGuiPanel {
@@ -21,6 +22,7 @@ object PlayerDetails : ImGuiPanel {
     }
 
     override fun render(open_: ImBoolean) {
+        DearF3Client.LOGGER.info("Player Details loaded")
         if (!ImGui.begin("Player Position", open_)) {
             end()
             return

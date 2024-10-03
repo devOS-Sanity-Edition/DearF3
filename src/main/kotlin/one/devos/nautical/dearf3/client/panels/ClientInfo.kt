@@ -8,6 +8,7 @@ import imgui.ImGui.*
 import imgui.flag.ImGuiCol
 import imgui.flag.ImGuiCond
 import imgui.type.ImBoolean
+import one.devos.nautical.dearf3.client.DearF3Client
 
 object ClientInfo : ImGuiPanel {
     override fun theme() {
@@ -18,6 +19,7 @@ object ClientInfo : ImGuiPanel {
     }
 
     override fun render(open_: ImBoolean) {
+        DearF3Client.LOGGER.info("Client Information loaded")
         if (!ImGui.begin("Client Information")) {
             end()
             return

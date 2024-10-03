@@ -109,7 +109,7 @@ dependencies {
     //Mods
     modLocalRuntime(libs.bundles.dev.mods)
 
-    include(modImplementation("gay.asoji:innerpastels:1.3.9+rev.3259704-branch.kt.1.21.main")!!)
+    include(modImplementation("gay.asoji:innerpastels:1.3.10+rev.f81f139-branch.kt.1.21.main")!!)
 }
 
 // Write the version to the fabric.mod.json

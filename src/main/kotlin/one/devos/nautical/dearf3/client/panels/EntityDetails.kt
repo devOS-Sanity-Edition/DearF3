@@ -8,6 +8,7 @@ import imgui.flag.ImGuiCol
 import imgui.flag.ImGuiCond
 import imgui.type.ImBoolean
 import net.minecraft.util.Mth
+import one.devos.nautical.dearf3.client.DearF3Client
 import one.devos.nautical.dearf3.client.panels.Constants.client
 
 object EntityDetails : ImGuiPanel {
@@ -29,6 +30,7 @@ object EntityDetails : ImGuiPanel {
         var entityEyeRotPosHitResultX = 0.0F
         var entityEyeRotPosHitResultY = 0.0F
 
+        DearF3Client.LOGGER.info("Entity Details loaded")
         if (!ImGui.begin("Entity Details", open_)) {
             end()
             return

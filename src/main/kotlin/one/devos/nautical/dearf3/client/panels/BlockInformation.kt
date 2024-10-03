@@ -35,6 +35,7 @@ object BlockInformation : ImGuiPanel {
         var blockStateTagsHitResultList: MutableList<String> = mutableListOf()
         var fluidBlockStateTagsHitResultList: MutableList<String> = mutableListOf()
 
+        DearF3Client.LOGGER.info("Block Information loaded")
         if (!ImGui.begin("Block Information")) {
             end()
             return

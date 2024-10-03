@@ -9,6 +9,7 @@ import imgui.type.ImBoolean
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.client.Minecraft
+import one.devos.nautical.dearf3.client.DearF3Client
 
 
 @Environment(EnvType.CLIENT)
@@ -23,6 +24,7 @@ object ImGuiDevPanel : ImGuiPanel {
 
 
         ImGui.setWindowSize(600F, 300F)
+        DearF3Client.LOGGER.info("Dev Panel loaded")
         if (!begin("DearF3 - Dev Panel", open)) {
             // Early out if the window is collapsed, as an optimization.
             end()

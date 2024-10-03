@@ -12,6 +12,7 @@ import net.fabricmc.loader.api.ModContainer
 import net.fabricmc.loader.api.metadata.ModMetadata
 import net.minecraft.SharedConstants
 import net.minecraft.client.ClientBrandRetriever
+import one.devos.nautical.dearf3.client.DearF3Client
 import one.devos.nautical.dearf3.client.panels.Constants.client
 import one.devos.nautical.dearf3.client.panels.Constants.io
 
@@ -25,6 +26,7 @@ object GameInformation : ImGuiPanel {
 
     override fun render(open_: ImBoolean) {
 
+        DearF3Client.LOGGER.info("Game Information loaded")
         if (!ImGui.begin("Game Information")) {
             end()
             return
