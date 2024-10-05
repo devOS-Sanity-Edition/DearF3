@@ -40,8 +40,11 @@ object PlayerDetails : ImGuiPanel {
         setWindowPos(50F, 655F, ImGuiCond.FirstUseEver)
 
         pushItemWidth(200F)
-        inputFloat3("Co-ordinates", floatArrayOf(clientCamera?.x?.toFloat() ?: return, clientCamera?.y?.toFloat() ?: return, clientCamera?.z?.toFloat() ?: return))
-        inputFloat2("Facing X/Y", floatArrayOf(Mth.wrapDegrees(clientCamera?.rotationVector?.x?.toFloat() ?: return), Mth.wrapDegrees(clientCamera?.rotationVector?.y?.toFloat() ?: return)))
+        run {
+            inputFloat3("Co-ordinates", floatArrayOf(clientCamera?.x?.toFloat() ?: return@run, clientCamera?.y?.toFloat() ?: return@run, clientCamera?.z?.toFloat() ?: return@run))
+            inputFloat2("Facing X/Y", floatArrayOf(Mth.wrapDegrees(clientCamera?.rotationVector?.x?.toFloat() ?: return@run), Mth.wrapDegrees(clientCamera?.rotationVector?.y?.toFloat() ?: return@run)))
+        }
+        popItemWidth()
 
         end()
     }

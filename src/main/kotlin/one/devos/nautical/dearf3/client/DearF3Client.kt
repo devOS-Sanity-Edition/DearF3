@@ -3,11 +3,7 @@ package one.devos.nautical.dearf3.client
 import com.mojang.blaze3d.platform.InputConstants
 import gay.asoji.fmw.FMW
 import gay.asoji.innerpastels.client.ImGuiClient.panels
-import gay.asoji.innerpastels.client.imgui.ImGuiPanel
 import gay.asoji.innerpastels.misc.DevDisclaimer
-import imgui.ImGui
-import imgui.ImGui.end
-import imgui.type.ImBoolean
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
@@ -62,11 +58,11 @@ object DearF3Client : ClientModInitializer {
 //                },
 //                    DevDebugSpace
 
-//                BlockInformation,
+                BlockInformation,
                 ClientInfo,
                 EntityDetails,
                 GameInformation,
-//                PlayerDetails
+                PlayerDetails
             )
         )
 

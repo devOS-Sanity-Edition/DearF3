@@ -47,80 +47,83 @@ object BlockInformation : ImGuiPanel {
             return
         }
 
-        setWindowSize(500F, 500F, ImGuiCond.FirstUseEver)
-        setWindowPos(50F, 145F, ImGuiCond.FirstUseEver)
-
-
         try {
-            if (blockRaycastHit?.type == HitResult.Type.BLOCK) {
-                val blockHit = blockRaycastHit as BlockHitResult
-                val blockPos = blockHit.blockPos
-                val blockState = client.level!!.getBlockState(blockPos) ?: return
+            setWindowSize(500F, 500F, ImGuiCond.FirstUseEver)
+            setWindowPos(50F, 145F, ImGuiCond.FirstUseEver)
 
-                blockHitResultName = blockState.block.name.string
-                blockStateHitResultName = blockState.block.stateDefinition.toString()
 
-                blockPosHitResultX = blockPos.x
-                blockPosHitResultY = blockPos.y
-                blockPosHitResultZ = blockPos.z
-                if (blockState.hasProperty(BlockStateProperties.WATERLOGGED)) {
-                    blockPosHitResultWaterlogState = blockState.getValue(BlockStateProperties.WATERLOGGED)
+            try {
+                if (blockRaycastHit?.type == HitResult.Type.BLOCK) {
+                    val blockHit = blockRaycastHit as BlockHitResult
+                    val blockPos = blockHit.blockPos
+                    val blockState = client.level!!.getBlockState(blockPos) ?: return
+
+                    blockHitResultName = blockState.block.name.string
+                    blockStateHitResultName = blockState.block.stateDefinition.toString()
+
+                    blockPosHitResultX = blockPos.x
+                    blockPosHitResultY = blockPos.y
+                    blockPosHitResultZ = blockPos.z
+                    if (blockState.hasProperty(BlockStateProperties.WATERLOGGED)) {
+                        blockPosHitResultWaterlogState = blockState.getValue(BlockStateProperties.WATERLOGGED)
+                    }
+
+                    blockState.tags.map { tagKey -> "#" + tagKey.location() }.forEach { e -> blockStateTagsHitResultList.add(e) }
                 }
-
-                blockState.tags.map { tagKey -> "#" + tagKey.location() }.forEach { e -> blockStateTagsHitResultList.add(e) }
+            } catch (e: Exception) {
+    //            DearF3Client.LOGGER.error(e.stackTraceToString())
             }
-        } catch (e: Exception) {
-//            DearF3Client.LOGGER.error(e.stackTraceToString())
-        }
 
-        try {
-            if (fluidRaycastHit?.type == HitResult.Type.BLOCK) {
-                val blockHit = fluidRaycastHit as BlockHitResult
-                val blockPos = blockHit.blockPos
-                val fluidState = client.level!!.getFluidState(blockPos) ?: return
+            try {
+                if (fluidRaycastHit?.type == HitResult.Type.BLOCK) {
+                    val blockHit = fluidRaycastHit as BlockHitResult
+                    val blockPos = blockHit.blockPos
+                    val fluidState = client.level!!.getFluidState(blockPos) ?: return
 
-                fluidHitResultName = fluidState.type.toString()
-                fluidBlockPosHitResultFluidState = BuiltInRegistries.FLUID.getKey(fluidState.type).toString()
+                    fluidHitResultName = fluidState.type.toString()
+                    fluidBlockPosHitResultFluidState = BuiltInRegistries.FLUID.getKey(fluidState.type).toString()
 
-                if (fluidBlockPosHitResultFluidState.contains("EmptyFluid")) {
-                    fluidBlockPosHitResultFluidState = "Not a fluid!"
+                    if (fluidBlockPosHitResultFluidState.contains("EmptyFluid")) {
+                        fluidBlockPosHitResultFluidState = "Not a fluid!"
+                    }
+
+                    fluidBlockPosHitResultX = blockPos.x
+                    fluidBlockPosHitResultY = blockPos.y
+                    fluidBlockPosHitResultZ = blockPos.z
+
+                    fluidState.tags.map { tagKey -> "#" + tagKey.location }.forEach { e -> fluidBlockStateTagsHitResultList.add(e) }
                 }
-
-                fluidBlockPosHitResultX = blockPos.x
-                fluidBlockPosHitResultY = blockPos.y
-                fluidBlockPosHitResultZ = blockPos.z
-
-                fluidState.tags.map { tagKey -> "#" + tagKey.location }.forEach { e -> fluidBlockStateTagsHitResultList.add(e) }
+            } catch (e: Exception) {
+    //            DearF3Client.LOGGER.error(e.stackTraceToString())
             }
-        } catch (e: Exception) {
-//            DearF3Client.LOGGER.error(e.stackTraceToString())
-        }
 
-        pushItemWidth(200F)
-        inputFloat3("Block Position: Global", floatArrayOf(clientCamera?.blockPosition()?.x?.toFloat() ?: return, clientCamera?.blockPosition()?.y?.toFloat() ?: return, clientCamera?.blockPosition()?.z?.toFloat() ?: return))
-        inputFloat3("Block Position: Relative", floatArrayOf((clientCamera?.blockPosition()?.x?.toFloat() ?: return), (clientCamera?.blockPosition()?.y?.toFloat() ?: return), (clientCamera?.blockPosition()?.z?.toFloat() ?: return)))
-        spacing()
-        separator()
-        spacing()
-        text("Targeted Block: $blockHitResultName")
-        text("Targeted Block State: $blockStateHitResultName")
-//        text("Is Targeted Block Waterlogged?: $blockPosHitResultWaterlogState")
-        checkbox("Is Targeted Block Waterlogged?", blockPosHitResultWaterlogState)
-        inputFloat3("Targeted Block Position", floatArrayOf(blockPosHitResultX.toFloat(), blockPosHitResultY.toFloat(), blockPosHitResultZ.toFloat()))
-        popItemWidth()
-        if (beginListBox("Block Tags")) {
-            blockStateTagsHitResultList.forEach(_root_ide_package_.imgui.ImGui::selectable)
-            endListBox()
+            pushItemWidth(200F)
+            inputFloat3("Block Position: Global", floatArrayOf(clientCamera?.blockPosition()?.x?.toFloat() ?: return, clientCamera?.blockPosition()?.y?.toFloat() ?: return, clientCamera?.blockPosition()?.z?.toFloat() ?: return))
+            inputFloat3("Block Position: Relative", floatArrayOf((clientCamera?.blockPosition()?.x?.toFloat() ?: return), (clientCamera?.blockPosition()?.y?.toFloat() ?: return), (clientCamera?.blockPosition()?.z?.toFloat() ?: return)))
+            spacing()
+            separator()
+            spacing()
+            text("Targeted Block: $blockHitResultName")
+            text("Targeted Block State: $blockStateHitResultName")
+    //        text("Is Targeted Block Waterlogged?: $blockPosHitResultWaterlogState")
+            checkbox("Is Targeted Block Waterlogged?", blockPosHitResultWaterlogState)
+            inputFloat3("Targeted Block Position", floatArrayOf(blockPosHitResultX.toFloat(), blockPosHitResultY.toFloat(), blockPosHitResultZ.toFloat()))
+            popItemWidth()
+            if (beginListBox("Block Tags")) {
+                blockStateTagsHitResultList.forEach(_root_ide_package_.imgui.ImGui::selectable)
+                endListBox()
+            }
+            separator()
+            text("Targeted Fluid: $fluidBlockPosHitResultFluidState")
+            pushItemWidth(200F)
+            inputFloat3("Targeted Fluid Block Position", floatArrayOf(fluidBlockPosHitResultX.toFloat(), fluidBlockPosHitResultY.toFloat(), fluidBlockPosHitResultZ.toFloat()))
+            popItemWidth()
+            if (beginListBox("Fluid Tags")) {
+                fluidBlockStateTagsHitResultList.forEach(_root_ide_package_.imgui.ImGui::selectable)
+                endListBox()
+            }
+        } finally {
+            end()
         }
-        separator()
-        text("Targeted Fluid: $fluidBlockPosHitResultFluidState")
-        pushItemWidth(200F)
-        inputFloat3("Targeted Fluid Block Position", floatArrayOf(fluidBlockPosHitResultX.toFloat(), fluidBlockPosHitResultY.toFloat(), fluidBlockPosHitResultZ.toFloat()))
-        popItemWidth()
-        if (beginListBox("Fluid Tags")) {
-            fluidBlockStateTagsHitResultList.forEach(_root_ide_package_.imgui.ImGui::selectable)
-            endListBox()
-        }
-        end()
     }
 }
